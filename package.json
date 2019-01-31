@@ -2,7 +2,7 @@
   "name": "goods",
   "description": "An ecommerce platform for local businesses to market their products globally",
   "version": "0.1.0",
-  "main": "./src/server",
+  "main": "src/server",
   "private": true,
   "keywords": [
     "feathers"
@@ -14,7 +14,7 @@
   "contributors": [],
   "bugs": {},
   "directories": {
-    "lib": "server",
+    "lib": "src/server",
     "test": "test/"
   },
   "engines": {
