@@ -1,56 +1,29 @@
 # goods
 
-> An ecommerce platform for local businesses to market their products globally
-
-## About
-
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
-
-## Getting Started
-
-Getting up and running is as easy as 1, 2, 3.
-
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
-2. Install your dependencies
-
-    ```
-    cd path/to/goods; npm install
-    ```
-
-3. Start your app
-
-    ```
-    npm start
-    ```
-
-## Testing
-
-Simply run `npm test` and all your tests in the `test/` directory will be run.
-
-## Scaffolding
-
-Feathers has a powerful command line interface. Here are a few things it can do:
-
+## Project setup
 ```
-$ npm install -g @feathersjs/cli          # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers generate hook                  # Generate a new Hook
-$ feathers help                           # Show all commands
+npm install
 ```
 
-## Help
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
+### Compiles and minifies for production
+```
+npm run build
+```
 
-## Changelog
+### Run your tests
+```
+npm run test
+```
 
-__0.1.0__
+### Lints and fixes files
+```
+npm run lint
+```
 
-- Initial release
-
-## License
-
-Copyright (c) 2018
-
-Licensed under the [MIT license](LICENSE).
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
