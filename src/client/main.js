@@ -2,8 +2,8 @@ import Vue from 'vue';
 import VueFeathers from 'vue-feathers';
 import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
-import router from './router/router';
-import store from './store/store';
+import router from './router';
+import store from './store';
 import feathers from './feathers';
 
 Vue.config.productionTip = false;

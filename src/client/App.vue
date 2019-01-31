@@ -4,17 +4,8 @@ import Navbar from '@/components/Navbar.vue';
 
 export default {
   name: 'app',
-  created() {
-    this.authenticate();
-  },
-  methods: {
-    authenticate() {
-      this.$feathers.authenticate().then(() => {
-        console.log("Authenticated by local storage");
-      }).catch(e => {
-        console.log("Error authenticating by local storage!", e);
-      });
-    }
+  mounted() {
+    this.$store.dispatch('account/jwtLogin');
   },
   components: {
     Navbar,
