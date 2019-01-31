@@ -41,7 +41,16 @@ export default {
   methods: {
     onSubmit (event) {
       event.preventDefault();
-      alert(JSON.stringify(this.form));
+      // this.$feathers.service('users').create(this.form);
+      this.$feathers.authenticate({
+        strategy: 'local',
+        email: this.form.email,
+        password: this.form.password
+      }).then(() => {
+        console.log('Authenticated');
+      }).catch(e => {
+        console.error('Error authenticating!', e);
+      });
     }
   }
 }
