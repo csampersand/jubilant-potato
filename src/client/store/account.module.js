@@ -48,6 +48,10 @@ const actions = {
       dispatch('jwtLogin');
       router.push('/');
     }).catch(e => {
+      swal("Uh oh!", "We couldn't log you in. Please try again.", "error", {
+        buttons: false,
+        timer: 2000
+      });
       console.error('Error authenticating!', e);
     });
   },
@@ -62,11 +66,44 @@ const actions = {
       buttons: false,
       timer: 2000
     });
-  }
+  },
 
-  /*
-  register
-   */
+  register({ commit }, payload) {
+    feathers.service('users').create(payload).then(response => {
+
+      // Automatically log user in after registering
+      feathers.authenticate({
+        strategy: 'local',
+        email: payload.email,
+        password: payload.password
+      }).then(() => {
+        console.log('Authenticated');
+        swal("Registered successfully!", "Your account has been created.", "success", {
+          buttons: false,
+          timer: 2000
+        });
+        console.log(response);
+        commit('login', response);
+        router.push('/');
+      }).catch(e => {
+        swal("Uh oh!", "An error occurred while registering. Please try logging in.", "error", {
+          buttons: false,
+          timer: 2000
+        });
+        router.push('/login');
+        console.error('Error authenticating!', e);
+      });
+
+    }).catch(error => {
+        console.error("Error registering", error);
+        console.log(Object.keys(error.errors));
+        this.errors = error.errors;
+        swal("Uh oh!", "We couldn't sign you up. Please try again.", "error", {
+            buttons: false,
+            timer: 2000
+        });
+    })
+  }
 }
 
 const mutations = {
