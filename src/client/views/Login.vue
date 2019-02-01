@@ -1,8 +1,8 @@
 <template>
-  <b-container id="login">
+  <b-container>
     <b-row align-h="center">
       <b-col cols="4">
-        <b-form @submit="onSubmit">
+        <b-form @submit="onSubmit" id="login">
           <b-form-group id="emailInputGroup"
                         label="Email address:"
                         label-for="email">
@@ -23,6 +23,7 @@
           </b-form-group>
           <b-button type="submit" variant="info" block>Log in</b-button>
         </b-form>
+        <p class="text-center"><b-link to="/register">Create Account</b-link></p>
       </b-col>
     </b-row>
   </b-container>
@@ -41,16 +42,7 @@ export default {
   methods: {
     onSubmit (event) {
       event.preventDefault();
-      // this.$feathers.service('users').create(this.form);
-      this.$feathers.authenticate({
-        strategy: 'local',
-        email: this.form.email,
-        password: this.form.password
-      }).then(() => {
-        console.log('Authenticated');
-      }).catch(e => {
-        console.error('Error authenticating!', e);
-      });
+      this.$store.dispatch('account/localLogin', this.form)
     }
   }
 }
@@ -58,6 +50,6 @@ export default {
 
 <style lang="scss">
 #login {
-  padding-top: 30px
+  padding: 30px 0 15px
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}<span v-if="$store.getters['account/user'].loggedIn">, {{ $store.getters['account/user'].fname }}!</span></h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the

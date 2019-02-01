@@ -1,11 +1,16 @@
 import feathers from '../feathers';
 import router from '../router';
+import swal from 'sweetalert';
+
+const blankUser = {
+  loggedIn: false,
+  email: '',
+  fname: '',
+  lname: '',
+}
 
 const state = {
-  user: {
-    loggedIn: false,
-    email: '',
-  }
+  user: blankUser
 }
 
 const actions = {
@@ -29,19 +34,34 @@ const actions = {
     });
   },
 
-  /*
-  log in with username and password
-  set JWT token
-  set user in localStorage
-  redirect to home page
-   */
+  localLogin({ dispatch }, payload) {
+    feathers.authenticate({
+      strategy: 'local',
+      email: payload.email,
+      password: payload.password
+    }).then(() => {
+      console.log('Authenticated');
+      swal("Logged in!", "You were logged in successfully.", "success", {
+        buttons: false,
+        timer: 2000
+      });
+      dispatch('jwtLogin');
+      router.push('/');
+    }).catch(e => {
+      console.error('Error authenticating!', e);
+    });
+  },
 
   logout({ commit }) {
     feathers.logout();
-    // put a sweet alert here
     commit('logout');
     console.log('Logged out');
     router.push('/');
+
+    swal("Logged out!", "You were logged out successfully.", "success", {
+      buttons: false,
+      timer: 2000
+    });
   }
 
   /*
@@ -51,19 +71,21 @@ const actions = {
 
 const mutations = {
   login(state, user) {
-    state.user = user;
+    state.user = {...user, loggedIn: true};
   },
   logout(state) {
-    state.user = {
-      loggedIn: false,
-      email: '',
-    }
+    state.user = blankUser;
   }
+}
+
+const getters = {
+  user: state => state.user
 }
 
 export const account = {
   namespaced: true,
   state,
   actions,
-  mutations
+  mutations,
+  getters
 };
