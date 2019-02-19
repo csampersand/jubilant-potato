@@ -6,7 +6,7 @@ import feathers from '@feathersjs/client';
 import auth from '@feathersjs/authentication-client';
 
 // Socket.io is exposed as the `io` global.
-const socket = io('http://localhost:3030');
+const socket = io(process.env.VUE_APP_API_HOST);
 // @feathersjs/client is exposed as the `feathers` global.
 export default feathers()
   .configure(feathers.socketio(socket))

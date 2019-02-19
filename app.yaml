@@ -1,0 +1,16 @@
+runtime: nodejs10
+
+# handlers:
+# - url: /
+#   static_files: dist/index.html
+#   upload: dist/index.html
+
+# - url: /dist/(.*)
+#   static_files: dist/\1
+#   upload: dist/(.*)
+
+env_variables:
+  NODE_ENV: "production"
+  HOST: "goods-230520.appspot.com"
+  PORT: "80"
+  MONGODB: "mongodb://104.196.153.29:27017/goods"

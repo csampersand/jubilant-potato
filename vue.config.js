@@ -6,5 +6,5 @@ module.exports = {
       }
     },
     entry: ['./src/client/main.js']
-  }
+  },
 }
