@@ -1,5 +1,5 @@
-runtime: nodejs10
-
+runtime: nodejs
+env: flex
 # handlers:
 # - url: /
 #   static_files: dist/index.html
@@ -11,6 +11,4 @@ runtime: nodejs10
 
 env_variables:
   NODE_ENV: "production"
-  HOST: "goods-230520.appspot.com"
-  PORT: "80"
-  MONGODB: "mongodb://104.196.153.29:27017/goods"
+  MONGODB: "mongodb://10.142.0.3:27017/goods"
