@@ -9,6 +9,16 @@ env: flex
 #   static_files: dist/\1
 #   upload: dist/(.*)
 
+# This can, in theory, be disabled
+# due to the app having a MongoDB backend,
+# but it might still cause connection issues
+# by breaking the socket connection. ¯\_(ツ)_/¯
+manual_scaling:
+  instances: 1
+
+network:
+  session_affinity: true
+
 env_variables:
   NODE_ENV: "production"
   MONGODB: "mongodb://10.142.0.3:27017/goods"
