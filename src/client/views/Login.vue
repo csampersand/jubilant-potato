@@ -42,7 +42,7 @@ export default {
   methods: {
     onSubmit (event) {
       event.preventDefault();
-      this.$store.dispatch('account/localLogin', this.form)
+      this.$store.dispatch('account/localLogin', { ...this.form, redirect: this.$route.query.redirect || "/" })
     }
   }
 }

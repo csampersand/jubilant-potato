@@ -7,9 +7,9 @@
 
   <b-collapse is-nav id="nav_collapse">
 
-    <b-navbar-nav v-if="$store.getters['account/user'].loggedIn">
+    <b-navbar-nav>
       <b-nav-item to="/" exact>Home</b-nav-item>
-      <b-nav-item to="/about">About</b-nav-item>
+      <b-nav-item v-if="user.loggedIn" to="/about">About</b-nav-item>
       <b-nav-item href="#" disabled>Disabled</b-nav-item>
     </b-navbar-nav>
 
@@ -29,6 +29,17 @@
   </b-collapse>
 </b-navbar>
 </template>
+
+<script>
+  export default {
+    name: 'app',
+    computed: {
+      user () {
+        return this.$store.getters['account/user']
+      }
+    }
+  }
+</script>
 
 <style>
 body {

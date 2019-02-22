@@ -14,7 +14,11 @@ const state = {
 }
 
 const actions = {
-  jwtLogin({ commit }) {
+  /**
+   * Log in using Local Storage token
+   * @param  {path} redirect       The path to redirect to on succcessful login
+   */
+  jwtLogin({ commit }, redirect = '/') {
     feathers.authenticate()
     .then(response => {
       console.log('Authenticated!', response);
@@ -28,12 +32,18 @@ const actions = {
       feathers.set('user', user);
       console.log('User', feathers.get('user'));
       commit('login', feathers.get('user'));
+      router.push(redirect)
     })
     .catch(function(error){
       console.error('Error authenticating!', error);
     });
   },
 
+  /**
+   * Log in using Local Storage token
+   * @param  {objct} payload       Object containing the email and password to log in
+   * @param  {path} redirect       The path to redirect to on succcessful login
+   */
   localLogin({ dispatch }, payload) {
     feathers.authenticate({
       strategy: 'local',
@@ -41,12 +51,11 @@ const actions = {
       password: payload.password
     }).then(() => {
       console.log('Authenticated');
+      dispatch('jwtLogin', payload.redirect || '/');
       swal("Logged in!", "You were logged in successfully.", "success", {
         buttons: false,
         timer: 2000
       });
-      dispatch('jwtLogin');
-      router.push('/');
     }).catch(e => {
       swal("Uh oh!", "We couldn't log you in. Please try again.", "error", {
         buttons: false,
