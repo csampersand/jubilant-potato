@@ -44,6 +44,16 @@
 
 <script>
 export default {
+  mounted() {
+    if (this.user.loggedIn) {
+      this.$router.push(this.$route.query.redirect || '/')
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters['account/user']
+    }
+  },
   data() {
     return {
       form: {
@@ -58,6 +68,18 @@ export default {
     onSubmit (event) {
       event.preventDefault();
       this.$store.dispatch('account/register', this.form)
+      .then(response => {
+        this.$swal("Registered successfully!", "Your account has been created.", "success", {
+          buttons: false,
+          timer: 2000
+        });
+        this.$router.push('/login')
+      }, error => {
+        this.$swal("Uh oh!", "There was a problem trying to create your account. Please try again.", "error", {
+          buttons: false,
+          timer: 2000
+        });
+      })
     }
   }
 }

@@ -31,6 +31,16 @@
 
 <script>
 export default {
+  mounted() {
+    if (this.user.loggedIn) {
+      this.$router.push(this.$route.query.redirect || '/')
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters['account/user']
+    }
+  },
   data() {
     return {
       form: {
@@ -42,7 +52,19 @@ export default {
   methods: {
     onSubmit (event) {
       event.preventDefault();
-      this.$store.dispatch('account/localLogin', { ...this.form, redirect: this.$route.query.redirect || "/" })
+      this.$store.dispatch('account/localLogin', this.form)
+        .then(reponse => {
+          this.$swal("Logged in!", "You were logged in successfully.", "success", {
+            buttons: false,
+            timer: 2000
+          });
+          this.$router.push(this.$route.query.redirect || '/')
+        }, error => {
+          this.$swal("Uh oh!", "We couldn't log you in. Please try again.", "error", {
+            buttons: false,
+            timer: 2000
+          });
+        });
     }
   }
 }

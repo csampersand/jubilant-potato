@@ -4,9 +4,6 @@ import Navbar from '@/components/Navbar.vue';
 
 export default {
   name: 'app',
-  mounted() {
-    this.$store.dispatch('account/jwtLogin', this.$route.query.redirect || '/');
-  },
   components: {
     Navbar,
   },

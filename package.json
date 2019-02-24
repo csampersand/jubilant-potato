@@ -29,7 +29,8 @@
     "mocha": "mocha test/ --recursive --exit",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "npm run build && gcloud app deploy"
   },
   "dependencies": {
     "@feathersjs/authentication": "^2.1.16",
@@ -60,6 +61,7 @@
     "vue": "^2.5.21",
     "vue-feathers": "^0.1.0",
     "vue-router": "^3.0.1",
+    "vue-swal": "^1.0.0",
     "vuex": "^3.0.1",
     "winston": "^3.2.1"
   },
