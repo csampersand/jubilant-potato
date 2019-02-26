@@ -21,7 +21,7 @@
           User
         </template>
         <b-dropdown-item href="#">Profile</b-dropdown-item>
-        <b-dropdown-item v-on:click="logout()">Signout</b-dropdown-item>
+        <b-dropdown-item v-on:click="logoutNavbar()">Signout</b-dropdown-item>
       </b-nav-item-dropdown>
       <b-nav-item v-else to="/login">Login</b-nav-item>
     </b-navbar-nav>
@@ -31,27 +31,30 @@
 </template>
 
 <script>
-  export default {
-    name: 'app',
-    computed: {
-      user () {
-        return this.$store.getters['account/user']
-      }
-    },
-    methods: {
-      logout() {
-        this.$store.dispatch('account/logout')
-        .then(() => {
-          this.$router.push('/');
+import { mapActions } from 'vuex'
 
-          this.$swal("Logged out!", "You were logged out successfully.", "success", {
-            buttons: false,
-            timer: 2000
-          });
-        })
-      }
+export default {
+  name: 'app',
+  computed: {
+    user () {
+      return this.$store.getters['account/user']
     }
+  },
+  methods: {
+    logoutNavbar() {
+      this.logout()
+      .then(() => {
+        this.$router.push('/');
+
+        this.$swal("Logged out!", "You were logged out successfully.", "success", {
+          buttons: false,
+          timer: 2000
+        });
+      })
+    },
+    ...mapActions('account', ['logout'])
   }
+}
 </script>
 
 <style>

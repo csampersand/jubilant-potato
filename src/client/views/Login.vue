@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   mounted() {
     if (this.user.loggedIn) {
@@ -52,20 +54,21 @@ export default {
   methods: {
     onSubmit (event) {
       event.preventDefault();
-      this.$store.dispatch('account/localLogin', this.form)
-        .then(reponse => {
+      this.localLogin( this.form)
+        .then(() => {
           this.$swal("Logged in!", "You were logged in successfully.", "success", {
             buttons: false,
             timer: 2000
           });
           this.$router.push(this.$route.query.redirect || '/')
-        }, error => {
+        }, () => {
           this.$swal("Uh oh!", "We couldn't log you in. Please try again.", "error", {
             buttons: false,
             timer: 2000
           });
         });
-    }
+    },
+    ...mapActions('account', ['localLogin'])
   }
 }
 </script>

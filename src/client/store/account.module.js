@@ -1,5 +1,4 @@
 import feathers from '../feathers';
-import router from '../router';
 
 const blankUser = {
   loggedIn: false,
@@ -69,16 +68,6 @@ const actions = {
   logout({ commit }) {
     feathers.logout();
     commit('logout');
-  },
-
-  register({ commit }, payload) {
-    return new Promise((resolve, reject) => {
-      feathers.service('users').create(payload).then(response => {
-        resolve(response)
-      }, error => {
-        reject(error)
-      });
-    })
   }
 }
 

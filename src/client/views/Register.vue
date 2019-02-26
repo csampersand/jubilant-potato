@@ -67,17 +67,26 @@ export default {
   methods: {
     onSubmit (event) {
       event.preventDefault();
-      this.$store.dispatch('account/register', this.form)
-      .then(response => {
+      this.register(this.form)
+      .then(() => {
         this.$swal("Registered successfully!", "Your account has been created.", "success", {
           buttons: false,
           timer: 2000
         });
         this.$router.push('/login')
-      }, error => {
+      }, () => {
         this.$swal("Uh oh!", "There was a problem trying to create your account. Please try again.", "error", {
           buttons: false,
           timer: 2000
+        });
+      })
+    },
+    register(payload) {
+      return new Promise((resolve, reject) => {
+        this.$feathers.service('users').create(payload).then(response => {
+          resolve(response)
+        }, error => {
+          reject(error)
         });
       })
     }
