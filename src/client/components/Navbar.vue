@@ -9,13 +9,13 @@
 
     <b-navbar-nav>
       <b-nav-item to="/" exact>Home</b-nav-item>
-      <b-nav-item v-if="user.loggedIn" to="/about">About</b-nav-item>
+      <b-nav-item v-if="user" to="/about">About</b-nav-item>
       <b-nav-item href="#" disabled>Disabled</b-nav-item>
     </b-navbar-nav>
 
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
-      <b-nav-item-dropdown v-if="$store.getters['account/user'].loggedIn" right>
+      <b-nav-item-dropdown v-if="user" right>
         <!-- Using button-content slot -->
         <template slot="button-content">
           User
@@ -31,14 +31,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'app',
   computed: {
-    user () {
-      return this.$store.getters['account/user']
-    }
+    ...mapState('auth', ['user'])
   },
   methods: {
     logoutNavbar() {
@@ -52,7 +50,7 @@ export default {
         });
       })
     },
-    ...mapActions('account', ['logout'])
+    ...mapActions('auth', ['logout'])
   }
 }
 </script>

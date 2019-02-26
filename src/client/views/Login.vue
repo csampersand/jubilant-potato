@@ -2,13 +2,13 @@
   <b-container>
     <b-row align-h="center">
       <b-col cols="4">
-        <b-form @submit="onSubmit" id="login">
+        <b-form @submit.prevent="onSubmit(email, password)" id="login">
           <b-form-group id="emailInputGroup"
                         label="Email address:"
                         label-for="email">
             <b-form-input id="email"
                           type="email" required=""
-                          v-model="form.email"
+                          v-model="email"
                           placeholder="Your Email">
             </b-form-input>
           </b-form-group>
@@ -17,7 +17,7 @@
                         label-for="password">
             <b-form-input id="password"
                           type="password" required=""
-                          v-model="form.password"
+                          v-model="password"
                           placeholder="Your Password">
             </b-form-input>
           </b-form-group>
@@ -30,31 +30,19 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
+import { mapMutations, mapActions } from 'vuex'
 export default {
-  mounted() {
-    if (this.user.loggedIn) {
-      this.$router.push(this.$route.query.redirect || '/')
-    }
-  },
-  computed: {
-    user () {
-      return this.$store.getters['account/user']
-    }
-  },
-  data() {
+  data () {
     return {
-      form: {
-        email: '',
-        password: ''
-      }
+      email: undefined,
+      password: undefined,
+      error: undefined
     }
   },
   methods: {
-    onSubmit (event) {
-      event.preventDefault();
-      this.localLogin( this.form)
+    onSubmit (email, password) {
+      this.authenticate({strategy: 'local', email, password})
+        // Just use the returned error instead of mapping it from the store.
         .then(() => {
           this.$swal("Logged in!", "You were logged in successfully.", "success", {
             buttons: false,
@@ -68,7 +56,10 @@ export default {
           });
         });
     },
-    ...mapActions('account', ['localLogin'])
+    ...mapMutations('auth', {
+      clearAuthenticateError: 'clearAuthenticateError'
+    }),
+    ...mapActions('auth', ['authenticate'])
   }
 }
 </script>

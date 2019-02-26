@@ -43,16 +43,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   mounted() {
-    if (this.user.loggedIn) {
+    if (this.user) {
       this.$router.push(this.$route.query.redirect || '/')
     }
   },
   computed: {
-    user () {
-      return this.$store.getters['account/user']
-    }
+    ...mapState('auth', ['user'])
   },
   data() {
     return {
