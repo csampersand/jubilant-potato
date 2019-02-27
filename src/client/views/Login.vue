@@ -30,14 +30,22 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 export default {
+  mounted() {
+    if (this.user) {
+      this.$router.push(this.$route.query.redirect || '/')
+    }
+  },
   data () {
     return {
       email: undefined,
       password: undefined,
       error: undefined
     }
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   },
   methods: {
     onSubmit (email, password) {
@@ -59,7 +67,7 @@ export default {
     ...mapMutations('auth', {
       clearAuthenticateError: 'clearAuthenticateError'
     }),
-    ...mapActions('auth', ['authenticate'])
+    ...mapActions('auth', ['authenticate']),
   }
 }
 </script>
