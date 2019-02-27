@@ -1,12 +1,18 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import feathersVuex from 'feathers-vuex'
+import feathersClient from '../feathers'
 
-import { account } from './account.module';
+// Get a reference to the FeathersVuex plugin
+const { service, auth, FeathersVuex } = feathersVuex(feathersClient, { idField: '_id' })
 
-Vue.use(Vuex);
+// Register the plugin with Vue.
+Vue.use(FeathersVuex)
+Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {
-    account // namespaced, so must use commit('account/login')
-  }
+  plugins: [
+    service('users'),
+    auth({ userService: 'users' })
+  ]
 });

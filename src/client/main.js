@@ -15,7 +15,7 @@ Vue.use(VueFeathers, feathers);
 
 Vue.use(VueSwal)
 
-store.dispatch('account/jwtLogin', (typeof router.query !== 'undefined' ? router.query.redirect : '/'))
+store.dispatch('auth/authenticate')
   .catch(() => {})
   // Render the app
   .then(() => {

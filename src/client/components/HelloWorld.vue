@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}<span v-if="$store.getters['account/user'].loggedIn">, {{ $store.getters['account/user'].fname }}!</span></h1>
+    <h1>{{ msg }}<span v-if="user">, {{ user.fname }}!</span></h1>
     <p>
       Currently running in {{ mode }} mode.
     </p>
@@ -34,10 +34,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   },
   data() {
     return {
