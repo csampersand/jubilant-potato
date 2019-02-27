@@ -50,7 +50,6 @@ export default {
   methods: {
     onSubmit (email, password) {
       this.authenticate({strategy: 'local', email, password})
-        // Just use the returned error instead of mapping it from the store.
         .then(() => {
           this.$swal("Logged in!", "You were logged in successfully.", "success", {
             buttons: false,
